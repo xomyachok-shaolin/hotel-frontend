@@ -6,9 +6,8 @@ import router from '@/router'
 export default {
   state: {
     message: '',
-    info: {
-
-    }
+    UserDataProfile: [],
+    isLoadDataProfile: false
   },
 
   mutations: {
@@ -29,6 +28,12 @@ export default {
       } else {
         return true
       }
+    },
+    getUserDataProfile (state) {
+      return state.UserDataProfile
+    },
+    isLoadDataProfile (state) {
+      return state.isLoadDataProfile
     }
   },
 
@@ -109,8 +114,11 @@ export default {
       let isErrorExist = false
 
       let user = JSON.parse(localStorage.getItem('user'))
+      if (!user) ctx.dispatch('logout')
+
       let idUser = user.idUser
-      let response = await AXIOS.get('/user/getUserData/' + idUser,
+
+      let response = await AXIOS.get('/user/' + idUser,
         {
           headers: auth()
         })
@@ -119,8 +127,9 @@ export default {
           console.log(error.response.data)
         })
 
+      console.log(response.data)
       ctx.commit('cleanUserDataProfile')
-      ctx.commit('fillUserDataProfile', response.data)
+      ctx.commit('fillUserDataProfile', response.data.user)
     },
 
     async loginSubmitHandler (ctx, data) {
