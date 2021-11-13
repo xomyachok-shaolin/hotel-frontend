@@ -20,7 +20,7 @@
                         <v-icon color="lighten-1">fa-user</v-icon>
                       </v-list-tile-action>
                       <v-list-tile-content>
-                        <v-list-tile-title>{{info.username}}</v-list-tile-title>
+                        <v-list-tile-title>{{getUserDataProfile.username}}</v-list-tile-title>
                         <v-list-tile-sub-title>Username</v-list-tile-sub-title>
                       </v-list-tile-content>
                     </v-list-tile>
@@ -29,7 +29,7 @@
                         <v-icon color="lighten-1">fa-address-card</v-icon>
                       </v-list-tile-action>
                       <v-list-tile-content>
-                        <v-list-tile-title>{{info.email}}</v-list-tile-title>
+                        <v-list-tile-title>{{getUserDataProfile.email}}</v-list-tile-title>
                         <v-list-tile-sub-title>Email</v-list-tile-sub-title>
                       </v-list-tile-content>
                     </v-list-tile>
@@ -47,7 +47,7 @@
                         <v-icon color="lighten-1">fa-address-card</v-icon>
                       </v-list-tile-action>
                       <v-list-tile-content>
-                        <v-list-tile-title>{{info.address}}</v-list-tile-title>
+                        <v-list-tile-title>{{getUserDataProfile.address}}</v-list-tile-title>
                         <v-list-tile-sub-title>Address</v-list-tile-sub-title>
                       </v-list-tile-content>
                     </v-list-tile>
@@ -56,7 +56,7 @@
                         <v-icon color="lighten-1">fa-phone</v-icon>
                       </v-list-tile-action>
                       <v-list-tile-content>
-                        <v-list-tile-title>{{info.phone_number}}</v-list-tile-title>
+                        <v-list-tile-title>{{getUserDataProfile.phone_number}}</v-list-tile-title>
                         <v-list-tile-sub-title>Phone Number</v-list-tile-sub-title>
                       </v-list-tile-content>
                     </v-list-tile>

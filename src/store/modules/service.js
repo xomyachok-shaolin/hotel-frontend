@@ -1,6 +1,7 @@
 // import axios from 'axios'
-import authInstance from '@/util/auth'
-import router from '@/router'
+import auth from '@/util/auth'
+import { AXIOS } from '@/httpCommons'
+import router from '../../router'
 
 export default {
   namespaced: true,
@@ -21,15 +22,23 @@ export default {
     }
   },
   actions: {
-    async getServices ({ commit }) {
-      let service = await authInstance.get('/order/service/').then(r => r.data)
+    async getServices (ctx) {
+      ctx.dispatch('checkAuthData', null, { root: true }).then((i) => {
+        if (i) {
+          ctx.dispatch('logout')
+        }
+      })
 
-      commit('setServices', service)
-    },
-    async getService ({ commit }, id) {
-      let service = await authInstance.get(`/booking/${id}/`).then(r => r.data)
+      let user = JSON.parse(localStorage.getItem('user'))
+      if (!user) ctx.dispatch('logout')
 
-      commit('setService', service)
+      let service = await AXIOS.get('/order/service/', {
+        headers: auth()
+      })
+        .catch((error) => {
+          console.log(error.response.data)
+        })
+      ctx.commit('setServices', service.data)
     },
     addService ({ state, commit }, service) {
       let id = state.cart.map(s => s.id)
@@ -45,14 +54,22 @@ export default {
       commit('setCart', cart)
     },
     async doSubmitOrder ({ state, commit }, id) {
-      if (confirm('Are you sure to order?')) {
-        let order = await authInstance.post('/order/', {
-          booking_detail_id: id,
+      if (confirm('Вы уверены, что заказываете?')) {
+        let order = await AXIOS.post('/order/', {
+          booking_room: id,
           service: state.cart.map(s => s.id),
           total_price: state.cart.reduce((a, b) => a + b.price, 0)
-        }).then(r => r.data)
-        commit('setCart', [])
-        router.push(`/order/${order.id}`)
+        }, {
+          headers: auth()
+        }).then(result => {
+          console.log('result from server:\n', result)
+          if (result.status === 200) {
+            commit('setCart', [])
+            router.push(`/order/${result.data.id}`)
+          }
+        }).catch(error => {
+          console.log(error)
+        })
       }
     }
 

@@ -118,7 +118,7 @@ let router = new Router({
     },
     {
       path: '/order/:id',
-      name: 'orderDerail',
+      name: 'orderDetail',
       props: true,
       component: () => import('./views/Order.vue')
     },

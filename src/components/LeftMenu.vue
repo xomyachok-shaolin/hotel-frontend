@@ -14,7 +14,7 @@
               <img src="../assets/hotelservice.png">
             </v-list-tile-avatar>
             <v-list-tile-content>
-              <v-list-tile-title>{{info.first_name}} {{info.last_name}}</v-list-tile-title>
+              <v-list-tile-title>{{getUserDataProfile.first_name}} {{getUserDataProfile.last_name}}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
         </v-list>
@@ -44,10 +44,11 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 
 export default {
   computed: {
+    ...mapGetters(['getUserDataProfile', 'isLoadDataProfile']),
     ...mapState({
       open: state => state.navigation.drawer.open,
       clipped: state => state.navigation.drawer.clipped,
@@ -66,12 +67,12 @@ export default {
       drawerMini: 'navigation/drawerMini'
     }),
     ...mapActions({
-      doLogout: 'logout',
-      doGetInfo: 'user/doGetInfo'
+      ...mapActions(['loadUserData']),
+      doLogout: 'logout'
     })
   },
   beforeMount () {
-    this.doGetInfo()
+    this.loadUserData()
   }
 }
 </script>

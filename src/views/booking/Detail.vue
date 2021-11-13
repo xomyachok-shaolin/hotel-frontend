@@ -8,7 +8,7 @@
       <v-content>
         <v-container fluid>
           <v-layout row>
-            <h1>Booking Detail #{{booking.id}}</h1>
+            <h1>Детали бронирования №{{booking.id}}</h1>
           </v-layout>
           <v-layout row>
             <h2>{{booking.start_date}} to {{booking.end_date}}</h2>
@@ -20,22 +20,21 @@
                   <v-card color="blue" dark>
                     <v-card-title primary-title>
                       <div>
-                        <div class="headline">Room #{{ room.room.room_number }}</div>
+                        <div class="headline">Комната №{{ room.room.room_number }}</div>
                         <span>
-                          Floor : {{room.room.floor}}
+                          Этаж : {{room.room.floor}}
                           <br>
-                          Price : {{room.room.price}}
+                          Цена : {{room.room.price}}
                           <br>
-                          Type : {{room.room.type.title}}
                         </span>
                       </div>
                     </v-card-title>
-                    <v-card-actions v-if="booking.status === 'Checked In'">
-                      <v-btn color="success" dark :to="`/booking/privilege/${room.id}`">Privileges</v-btn>
-                      <v-btn color="success" dark :to="`/service/${room.id}`">Services</v-btn>
+                    <v-card-actions v-if="booking.status === 'Зарегистрировано'">
+                      <v-btn color="success" dark :to="`/booking/privilege/${room.id}`">Привилегии</v-btn>
+                      <v-btn color="success" dark :to="`/service/${room.id}`">Услуги</v-btn>
                     </v-card-actions>
                     <v-card-actions v-else>
-                      <p>Check-in is required to use our services.</p>
+                      <p>Для использования наших услуг требуется регистрация.</p>
                     </v-card-actions>
                   </v-card>
                 </v-flex>

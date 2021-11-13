@@ -11,30 +11,32 @@
             <v-flex md6 xs12 v-if="permission">
               <v-card color="blue" dark>
                 <v-card-title primary-title>
-                  <div class="headline">Booking #{{id}} Receipt ({{booking.night}} Nights)</div>
+                  <div class="headline">Квитанция о бронировании №{{id}} ({{booking.night}} <template v-if="booking.night===1">ночь</template>
+                          <template v-else>ночей</template>)</div>
                 </v-card-title>
+
                 <v-list light>
                   <v-list-tile v-for="d in booking.detail" :key="d.id">
                     <v-list-tile-content>
-                      <v-list-tile-title>Room {{d.room.room_number}}</v-list-tile-title>
+                      <v-list-tile-title>Комната {{d.room.room_number}}</v-list-tile-title>
                       <v-list-tile-sub-title>{{d.room.type.title}}</v-list-tile-sub-title>
                     </v-list-tile-content>
 
                     <v-list-tile-action>
-                      <v-list-tile-action>{{d.room.price}} THB</v-list-tile-action>
+                      <v-list-tile-action>{{d.room.price}} руб</v-list-tile-action>
                     </v-list-tile-action>
                   </v-list-tile>
 
                   <fragment v-for="d in booking.detail" :key="d.id">
-                    <fragment v-for="o in d.order_set" :key="o.id">
-                      <v-list-tile v-for="s in o.service" :key="s.id">
+                    <fragment v-for="o in d.orders" :key="o.id">
+                      <v-list-tile v-for="s in o.services" :key="s.id">
                         <v-list-tile-content>
                           <v-list-tile-title>{{s.title}}</v-list-tile-title>
                           <v-list-tile-sub-title>{{s.type.title}}</v-list-tile-sub-title>
                         </v-list-tile-content>
 
                         <v-list-tile-action>
-                          <v-list-tile-action>{{s.price}} THB</v-list-tile-action>
+                          <v-list-tile-action>{{s.price}} руб</v-list-tile-action>
                         </v-list-tile-action>
                       </v-list-tile>
                     </fragment>
@@ -44,19 +46,20 @@
 
                   <v-list-tile>
                     <v-list-tile-content>
-                      <v-list-tile-title>Total</v-list-tile-title>
+                      <v-list-tile-title>Всего</v-list-tile-title>
                     </v-list-tile-content>
 
-                    <v-list-tile-action>{{total}} THB</v-list-tile-action>
+                    <v-list-tile-action>{{total}} руб</v-list-tile-action>
                   </v-list-tile>
                 </v-list>
+
                 <v-card-actions>
-                  <v-btn color="success" to="/booking">Back</v-btn>
+                  <v-btn color="success" to="/booking">Назад</v-btn>
                 </v-card-actions>
               </v-card>
             </v-flex>
             <v-flex v-else>
-              <h1 class="red--text">Permission Denied</h1>
+              <h1 class="red--text">Доступ запрещен</h1>
             </v-flex>
           </v-layout>
         </v-container>
@@ -93,7 +96,7 @@ export default {
       booking = booking.reduce((a, b) => a + (b.room.price * this.booking.night), 0)
 
       let service = this.booking.detail || []
-      service = service.reduce((a, b) => a + b.order_set.reduce((a, b) => a + b.total_price, 0), 0)
+      service = service.reduce((a, b) => a + b.orders.reduce((a, b) => a + b.total_price, 0), 0)
 
       return booking + service
     },

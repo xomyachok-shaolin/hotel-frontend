@@ -1,5 +1,5 @@
-// import axios from 'axios'
-import authInstance from '@/util/auth'
+import auth from '@/util/auth'
+import { AXIOS } from '@/httpCommons'
 
 export default {
   namespaced: true,
@@ -12,10 +12,26 @@ export default {
     }
   },
   actions: {
-    async getOrder ({ commit }, id) {
-      let order = await authInstance.get(`/order/${id}/`).then(r => r.data)
+    async getOrder (ctx, id) {
+      ctx.dispatch('checkAuthData', null, { root: true }).then((i) => {
+        if (i) {
+          ctx.dispatch('logout')
+        }
+      })
 
-      commit('setOrder', order)
+      let user = JSON.parse(localStorage.getItem('user'))
+      if (!user) ctx.dispatch('logout')
+
+      let order = await AXIOS.get('/order/' + id,
+        {
+          headers: auth()
+        })
+        .catch(error => {
+          console.log(error.response.data)
+        })
+
+      console.log(order.data)
+      ctx.commit('setOrder', order.data)
     }
   }
 }
