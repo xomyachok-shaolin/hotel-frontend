@@ -17,6 +17,9 @@ export default {
   },
   actions: {
     async getPrivilege ({ commit, dispatch }) {
+
+      
+
       let privilege = await authInstance.get('/order/privilege/').then(r => r.data)
 
       commit('setPrivilege', privilege)

@@ -11,19 +11,19 @@
             <v-container fill-height>
               <v-layout align-center>
                 <v-flex>
-                  <h3 class style="color: #43A3F5;font-size : 6em; ">Welcome</h3>
+                  <h3 class style="color: #43A3F5;font-size : 6em; ">Гостеприимство</h3>
                   <span
                     class="subheading"
                     v-show="bookings.length == 0"
-                  >Seems like you do not have any booking yet.</span>
+                  >Похоже, что у вас еще нет бронирований.</span>
                   <!-- <v-divider class="my-3"></v-divider> -->
                   <div
                     class="title mb-3"
                     style="font-size : 10em;"
                     v-if="bookings.length == 0"
-                  >Create your first booking now!</div>
-                  <div class="title mb-3" style="font-size : 10em;" v-else>Create your booking now!</div>
-                  <v-btn color="info" to="/booking/create">New Booking</v-btn>
+                  >Создайте свое первое бронирование прямо сейчас!</div>
+                  <div class="title mb-3" style="font-size : 10em;" v-else>Создайте бронирование прямо сейчас!</div>
+                  <v-btn color="info" to="/booking/create">Новое бронирование</v-btn>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -34,24 +34,24 @@
                 <v-card color="blue" dark>
                   <v-card-title primary-title>
                     <div>
-                      <div class="headline">Booking #{{ booking.id }}</div>
+                      <div class="headline">Бронирование №{{ booking.id }}</div>
                       <span>
-                        Date : {{ booking.start_date }} to {{ booking.end_date }}
+                        Дата : {{ booking.start_date }} по {{ booking.end_date }}
                         <br>
-                        Total Room : {{ booking.detail.length }}
+                        Всего комнат : {{ booking.detail.length }}
                         <br>
-                        Status : {{booking.status}}
+                        Статус : {{booking.status}}
                       </span>
                     </div>
                   </v-card-title>
                   <v-card-actions>
-                    <v-btn color="success" dark :to="`/booking/detail/${booking.id}`">Detail</v-btn>
-                    <v-btn color="#77C6FF" :to="`/booking/receipt/${booking.id}`">Receipt</v-btn>
+                    <v-btn color="success" dark :to="`/booking/detail/${booking.id}`">Подробнее</v-btn>
+                    <v-btn color="#77C6FF" :to="`/booking/receipt/${booking.id}`">Чек</v-btn>
                     <v-btn
                       color="error"
                       :to="`/booking/checkout/${booking.id}`"
-                      v-if="booking.status === 'Checked In'"
-                    >Check out</v-btn>
+                      v-if="booking.status === 'Зарегистрировано'"
+                    >Выселить</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-flex>

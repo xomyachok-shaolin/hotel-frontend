@@ -1,7 +1,8 @@
+/* eslint-disable no-useless-return */
 // import axios from 'axios'
-import authInstance from '@/util/auth'
+import auth from '@/util/auth'
 import router from '@/router'
-import axios from 'axios'
+import { AXIOS } from '@/httpCommons'
 
 export default {
   namespaced: true,
@@ -19,6 +20,9 @@ export default {
     setBooking (state, payload) {
       state.booking = payload
     },
+    setNights (state, payload) {
+      state.nights = payload
+    },
     setCreateForm (state, payload) {
       state.createForm = payload
     },
@@ -30,50 +34,88 @@ export default {
     }
   },
   actions: {
-    async getBookings ({ commit }) {
-      commit('checkAuthData').then((i) => {
+    async getBookings (ctx) {
+      ctx.dispatch('checkAuthData', null, { root: true }).then((i) => {
         if (i) {
-          commit('logout')
+          ctx.dispatch('logout')
         }
       })
 
-      let booking = await axios
-        .get('/booking/', {
-          headers: authInstance()
-        })
+      let user = JSON.parse(localStorage.getItem('user'))
+      if (!user) ctx.dispatch('logout')
+      let bookings = await AXIOS.get('/booking/', {
+        headers: auth()
+      })
         .catch((error) => {
           console.log(error.response.data)
         })
-      console.log(booking)
-      commit('setBookings', booking)
+      console.log(bookings.data)
+      ctx.commit('setBookings', bookings.data)
     },
-    async getBooking ({ commit }, id) {
-      let booking = await authInstance.get(`/booking/${id}/`).then(r => r.data)
+    async getBooking (ctx, id) {
+      ctx.dispatch('checkAuthData', null, { root: true }).then((i) => {
+        if (i) {
+          ctx.dispatch('logout')
+        }
+      })
 
-      commit('setBooking', booking)
+      let user = JSON.parse(localStorage.getItem('user'))
+      if (!user) ctx.dispatch('logout')
+
+      let booking = await AXIOS.get('/booking/' + id,
+        {
+          headers: auth()
+        })
+        .catch(error => {
+          console.log(error.response.data)
+        })
+
+      console.log(booking.data)
+      ctx.commit('setBooking', booking.data)
     },
-    async getAvailableRoom ({ commit }, date) {
+    async getAvailableRoom (ctx, date) {
+      ctx.dispatch('checkAuthData', null, { root: true }).then((i) => {
+        if (i) {
+          ctx.dispatch('logout')
+        }
+      })
       const { startDate, endDate } = date
-      let rooms = await authInstance.get(`/booking/room/?start_date=${startDate}&&end_date=${endDate}`).then(r => r.data)
+      let rooms = await AXIOS.get(`/booking/room/?start_date=${startDate}&&end_date=${endDate}`,
+        {
+          headers: auth()
+        })
+        .catch(error => {
+          console.log(error.response.data)
+        })
 
-      rooms = rooms.map(r => ({ ...r, title: `(${r.type.title}) ${r.room_number} - ${r.price} THB` }))
+      rooms = Array.from(rooms.data)
+      rooms = rooms.map(r => ({ ...r, title: `(${r.type.title}) ${r.room_number} - ${r.price} руб` }))
 
-      commit('setAvailableRooms', rooms)
+      ctx.commit('setAvailableRooms', rooms)
     },
-    async doCreateBooking ({ commit, state }) {
-      if (confirm('Are you sure to book?')) {
-        let info = await authInstance.get('/auth/user').then(r => r.data)
+    async doCreateBooking (ctx) {
+      if (confirm('Вы уверены, что бронируете?')) {
+        ctx.dispatch('checkAuthData', null, { root: true }).then((i) => {
+          if (i) {
+            ctx.dispatch('logout')
+          }
+        })
 
-        let booking = await authInstance.post(`/booking/`, { ...state.createForm, owner: info.user.id }).then(r => r.data)
+        let user = JSON.parse(localStorage.getItem('user'))
 
-        if (booking.error) {
-          commit('setError', booking.error)
-        }
-
-        if (!booking.error) {
-          commit('setError', {})
-          router.push(`/booking/payment/${booking.id}`)
-        }
+        await AXIOS.post('/booking/',
+          {
+            ...ctx.state.createForm, user: user.idUser
+          }, {
+            headers: auth()
+          }).then(result => {
+          console.log('result from server:\n', result)
+          if (result.status === 200) {
+            router.push(`/booking/payment/${result.data.id}`)
+          }
+        }).catch(error => {
+          console.log(error)
+        })
       }
     },
     async doPayment ({ dispatch }, payment) {
@@ -82,13 +124,20 @@ export default {
         router.push('/payment/completed')
         return
       }
-
-      if (confirm('Are you sure to proceed?')) {
-        let pay = await authInstance.post(`/payment/`, { ...payment }).then(r => r.data)
-
-        if (!pay.error) {
-          router.push('/payment/completed')
-        }
+      if (confirm('Вы уверены, что хотите продолжите?')) {
+        await AXIOS.post('/payment/',
+          {
+            ...payment
+          }, {
+            headers: auth()
+          }).then(result => {
+          console.log('result from server:\n', result)
+          if (result.status === 200) {
+            router.push('/payment/completed')
+          }
+        }).catch(error => {
+          console.log(error)
+        })
       }
     },
     async doPaymentCheckout ({ dispatch }, payment) {
@@ -97,17 +146,17 @@ export default {
         return
       }
 
-      if (confirm('Are you sure to proceed?')) {
-        let pay = await authInstance.post(`/payment/`, { ...payment }).then(r => r.data)
+      // if (confirm('Вы уверены, что хотите продолжите?')) {
+      //   let pay = await authInstance.post(`/payment/`, { ...payment }).then(r => r.data)
 
-        if (!pay.error) {
-          dispatch('doCheckout', payment.booking_id)
-          router.push('/booking/checkout/completed')
-        }
-      }
+      //   if (!pay.error) {
+      //     dispatch('doCheckout', payment.booking_id)
+      //     router.push('/booking/checkout/completed')
+      //   }
+      // }
     },
     async doCheckout ({ commit, state }, id) {
-      await authInstance.patch(`/booking/${id}/`, { status_id: 2, check_out: new Date().toISOString() }).then(r => r.data)
+      // await authInstance.patch(`/booking/${id}/`, { status_id: 2, check_out: new Date().toISOString() }).then(r => r.data)
     }
   }
 }
