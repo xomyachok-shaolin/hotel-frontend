@@ -8,12 +8,12 @@
             <v-card class="elevation-12">
               <v-form>
                 <v-toolbar dark color="primary">
-                  <v-toolbar-title>Write Review</v-toolbar-title>
+                  <v-toolbar-title>Написать отзыв</v-toolbar-title>
                 </v-toolbar>
                 <v-card-text>
                   <v-text-field
-                    label="Title"
-                    placeholder="Title"
+                    label="Заголовок"
+                    placeholder="Заголовок"
                     v-model="form.title"
                     :error-messages="error.title"
                   />
@@ -21,15 +21,15 @@
                     type="number"
                     max="10"
                     min="0"
-                    title="Score"
-                    label="Score"
+                    title="Оценка"
+                    label="Оценка"
                     v-model="form.score"
                     :error-messages="error.score"
                   ></v-text-field>
                   <v-textarea
                     name="input-7-1"
-                    label="Detail"
-                    hint="Tell us what you think"
+                    label="Детали"
+                    hint="Расскажите нам, что вы о нас думаете"
                     v-model="form.description"
                     :error-messages="error.description"
                   />
@@ -37,7 +37,7 @@
                 <v-card-actions>
                   <v-layout justify-center>
                     <v-btn color="success" @click="doReview(id)">
-                      Submit
+                      Сохранить
                       <v-icon right dark>fa-sign-in-alt</v-icon>
                     </v-btn>
                   </v-layout>

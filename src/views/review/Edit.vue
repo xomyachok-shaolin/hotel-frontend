@@ -12,12 +12,12 @@
               <v-card class="elevation-12">
                 <v-form>
                   <v-toolbar dark color="primary">
-                    <v-toolbar-title>Edit Review #{{id}}</v-toolbar-title>
+                    <v-toolbar-title>Редактирование отзыва №{{id}}</v-toolbar-title>
                   </v-toolbar>
                   <v-card-text>
                     <v-text-field
-                      label="Title"
-                      placeholder="Title"
+                      label="Заголовок"
+                      placeholder="Заголовок"
                       v-model="form.title"
                       :error-messages="error.title"
                     />
@@ -25,15 +25,15 @@
                       type="number"
                       max="10"
                       min="0"
-                      title="Score"
-                      label="Score"
+                      title="Оценка"
+                      label="Оценка"
                       v-model="form.score"
                       :error-messages="error.score"
                     ></v-text-field>
                     <v-textarea
                       name="input-7-1"
-                      label="Detail"
-                      hint="Tell us what you think"
+                      label="Описание"
+                      hint="Расскажите нам, что вы думаете"
                       v-model="form.description"
                       :error-messages="error.description"
                     />
@@ -41,7 +41,7 @@
                   <v-card-actions>
                     <v-layout justify-center>
                       <v-btn color="success" @click="doEditReview(reviewId)">
-                        Edit
+                        Редактировать
                         <v-icon right dark>fa-sign-in-alt</v-icon>
                       </v-btn>
                     </v-layout>
@@ -50,7 +50,7 @@
               </v-card>
             </v-flex>
             <v-flex v-else>
-              <h1 class="red--text">Permission Denied</h1>
+              <h1 class="red--text">Доступ запрещен</h1>
             </v-flex>
           </v-layout>
         </v-container>
@@ -113,7 +113,7 @@ export default {
   },
   beforeMount () {
     this.getBooking(this.id).then(() => {
-      let review = this.booking.review
+      let review = this.booking.review[0]
 
       if (review) {
         delete review.created_at

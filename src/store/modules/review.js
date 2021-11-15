@@ -1,5 +1,6 @@
-import router from '@/router'
-import authInstance from '@/util/auth'
+import auth from '@/util/auth'
+import { AXIOS } from '@/httpCommons'
+import router from '../../router'
 
 export default {
   namespaced: true,
@@ -16,35 +17,50 @@ export default {
     }
   },
   actions: {
-    async doReview ({ commit, state }, id) {
-      let review = await authInstance.post('/review/', { ...state.review, booking_id: id }).then(r => r.data)
+    async doReview (ctx, id) {
+      ctx.dispatch('checkAuthData', null, { root: true }).then((i) => {
+        if (i) {
+          ctx.dispatch('logout')
+        }
+      })
 
-      if (review.error) {
-        commit('setError', {
-          ...review.error
-        })
-      }
-
-      if (!review.error) {
-        commit('setReviewForm', {})
-        commit('setError', {})
-        router.push('/review')
-      }
+      await AXIOS.post('/review/', {
+        ...ctx.state.review,
+        booking_id: id
+      }, {
+        headers: auth()
+      }).then(result => {
+        console.log('result from server:\n', result)
+        if (result.status === 200) {
+          ctx.commit('setReviewForm', {})
+          router.push('/review')
+        }
+      }).catch(error => {
+        console.log(error)
+      })
     },
-    async doEditReview ({ commit, state }, id) {
-      let review = await authInstance.patch(`/review/${id}/`, { ...state.review }).then(r => r.data).catch(e => e.response.data)
+    async doEditReview (ctx, id) {
+      ctx.dispatch('checkAuthData', null, { root: true }).then((i) => {
+        if (i) {
+          ctx.dispatch('logout')
+        }
+      })
 
-      if (review.errors) {
-        commit('setError', {
-          ...review.errors
-        })
-      }
-
-      if (!review.errors) {
-        commit('setReviewForm', {})
-        commit('setError', {})
-        router.push('/review')
-      }
+      await AXIOS.post(`/review/${id}/`,
+        {
+          ...ctx.state.review
+        }, {
+          headers: auth()
+        }).then(result => {
+        console.log('result from server:\n', result)
+        if (result.status === 200) {
+          ctx.commit('setReviewForm', {})
+          ctx.commit('setError', {})
+          router.push('/review')
+        }
+      }).catch(error => {
+        console.log(error)
+      })
     }
   },
   getters: {}

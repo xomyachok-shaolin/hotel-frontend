@@ -11,13 +11,13 @@
           <v-container fill-height>
             <v-layout align-center>
               <v-flex>
-                <h3 class style="font-size: 8em; color:#43A3F5">Sorry</h3>
+                <h3 class style="font-size: 8em; color:#43A3F5">Извините</h3>
                 <span
                   class="subheading"
                   v-show="bookings.length == 0"
-                >Bookings are required to write a review.</span>
-                <div class="title mb-3">Create your first booking now!</div>
-                <v-btn color="info" to="/booking/create">New Booking</v-btn>
+                >Бронирование необходимо для написания отзыва.</span>
+                <div class="title mb-3">Создайте свое первое бронирование прямо сейчас!</div>
+                <v-btn color="info" to="/booking/create">Новое бронирование</v-btn>
               </v-flex>
             </v-layout>
           </v-container>
@@ -27,12 +27,12 @@
             <v-container fill-height>
               <v-layout align-center>
                 <v-flex>
-                  <h3 class style="color: #43A3F5;font-size : 7em; ">Tell Us</h3>
+                  <h3 class style="color: #43A3F5;font-size : 7em; ">Расскажите нам</h3>
                   <!-- <v-divider class="my-3"></v-divider> -->
                   <div
                     class="title mb-2"
                     style="font-size : 10em; color :rgb(132, 124, 136)"
-                  >What do you think? You can provide us your feedback.</div>
+                  >Что вы думаете? Вы можете оставить нам свой отзыв.</div>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -40,7 +40,7 @@
           </v-container>
         <v-container fluid v-show="bookings.length > 0">
           <v-layout row>
-            <h1>Your Reviews</h1>
+            <h1>Ваши отзывы</h1>
           </v-layout>
           <v-container fluid grid-list-lg fill-height v-show="bookings.length > 0">
             <v-layout row wrap>
@@ -49,28 +49,28 @@
                   <v-card color="blue" dark>
                     <v-card-title primary-title>
                       <div>
-                        <div class="headline">Booking #{{ booking.id }}</div>
+                        <div class="headline">Бронирование №{{ booking.id }}</div>
                         <span>
-                          Date : {{ booking.start_date }} to {{ booking.end_date }}
+                          Дата : {{ booking.start_date }} по {{ booking.end_date }}
                           <br>
-                          Total Room : {{ booking.detail.length }}
+                          Всего комнат : {{ booking.detail.length }}
                         </span>
                       </div>
                     </v-card-title>
                   </v-card>
                 </v-flex>
-                <v-flex xs12 md6 v-if="booking.review !== null">
+                <v-flex  xs12 md6 v-if="booking.review.length !== 0">
                   <v-card color="blue" dark>
                     <v-card-title primary-title>
                       <div>
-                        <div class="headline">{{booking.review.title}}</div>
+                        <div class="headline">{{booking.review[0].title}}</div>
                         <span>
-                          Score : {{booking.review.score}}/10
+                          Оценка : {{booking.review[0].score}}/10
                           <br>
-                          {{booking.review.description}}
+                          {{booking.review[0].description}}
                           <br>
                           <v-btn color="success" :to="`/review/edit/${booking.id}`">
-                            <v-icon right left>fa-edit</v-icon>Edit review
+                            <v-icon right left>fa-edit</v-icon>Редактировать отзыв
                           </v-btn>
                         </span>
                       </div>
@@ -81,10 +81,10 @@
                   <v-card color="blue" dark>
                     <v-card-title primary-title>
                       <div>
-                        <div class="headline">We are waiting a feedback from you!</div>
+                        <div class="headline">Мы ждем обратной связи от вас!</div>
                         <span>
                           <v-btn color="success" :to="`/review/create/${booking.id}`">
-                            <v-icon right left>fa-edit</v-icon>Write a review
+                            <v-icon right left>fa-edit</v-icon>Написать отзыв
                           </v-btn>
                         </span>
                       </div>

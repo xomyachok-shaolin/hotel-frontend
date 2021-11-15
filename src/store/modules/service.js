@@ -1,4 +1,3 @@
-// import axios from 'axios'
 import auth from '@/util/auth'
 import { AXIOS } from '@/httpCommons'
 import router from '../../router'
@@ -55,7 +54,7 @@ export default {
     },
     async doSubmitOrder ({ state, commit }, id) {
       if (confirm('Вы уверены, что заказываете?')) {
-        let order = await AXIOS.post('/order/', {
+        await AXIOS.post('/order/', {
           booking_room: id,
           service: state.cart.map(s => s.id),
           total_price: state.cart.reduce((a, b) => a + b.price, 0)

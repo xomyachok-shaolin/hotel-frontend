@@ -11,7 +11,7 @@
             <v-flex xs12 sm8 md8 lg6>
               <v-card class="elevation-12">
                 <v-toolbar dark color="primary">
-                  <v-toolbar-title>Edit Profile</v-toolbar-title>
+                  <v-toolbar-title>Редактирование профиля</v-toolbar-title>
                 </v-toolbar>
                 <v-card-text>
                   <v-form>
@@ -21,7 +21,6 @@
                       label="Firstname"
                       type="text"
                       v-model="form.first_name"
-                      :error-messages="error.first_name"
                     ></v-text-field>
                     <v-text-field
                       prepend-icon="fa-file-signature"
@@ -29,7 +28,6 @@
                       label="Lastname"
                       type="text"
                       v-model="form.last_name"
-                      :error-messages="error.last_name"
                     ></v-text-field>
                     <v-text-field
                       prepend-icon="fa-phone"
@@ -38,7 +36,6 @@
                       label="Phone Number"
                       type="text"
                       v-model="form.phone_number"
-                      :error-messages="error.phone_number"
                     ></v-text-field>
                     <v-textarea
                       prepend-icon="fa-address-card"
@@ -47,18 +44,20 @@
                       label="Address"
                       rows="2"
                       v-model="form.address"
-                      :error-messages="error.address"
                     ></v-textarea>
                   </v-form>
                 </v-card-text>
                 <v-card-actions>
                   <v-btn color="error" to="/profile">
-                    <v-icon left dark>fa-times</v-icon>Cancel
+                    <v-icon left dark>fa-times</v-icon>Отмена
                   </v-btn>
                   <v-spacer></v-spacer>
                   <v-btn color="success" @click="doUpdateProfile">
-                    Save
+                    Сохранить
                     <v-icon right dark>fa-edit</v-icon>
+                    <template slot="waiting">
+        <loading/>
+      </template>
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -71,7 +70,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import { mapWaitingActions } from 'vue-wait'
 
 import NavBar from '@/components/NavBar.vue'
@@ -95,31 +94,26 @@ export default {
     })
   },
   methods: {
+    ...mapActions(['doUpdateProfile']),
+    ...mapMutations(['setUpdateForm']),
     ...mapWaitingActions('user', {
-      doGetInfo: 'loading user'
-    }),
-    ...mapMutations({
-      setUpdateForm: 'user/setUpdateForm'
-    }),
-    ...mapActions({
-      doUpdateProfile: 'user/doUpdateProfile'
-    })
-  },
-  beforeMount () {
-    this.doGetInfo().then(() => {
-      this.form = this.info
-
-      delete this.form.username
-      delete this.form.email
-      delete this.form.gender
+      loadUserData: 'loading user'
     })
   },
   watch: {
     form: {
-      handler (v) {
-        this.setUpdateForm(v)
+      handler (val) {
+        this.setUpdateForm(val)
       },
-      deep: true }
+      deep: true
+    }
+  },
+  beforeMount () {
+    this.form = JSON.parse(localStorage.getItem('user'))
+
+    delete this.form.login
+    delete this.form.email
+    delete this.form.gender
   }
 }
 </script>

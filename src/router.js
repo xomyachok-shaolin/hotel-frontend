@@ -32,16 +32,6 @@ let router = new Router({
       component: () => import('./views/profile/Password.vue')
     },
     {
-      path: '/dashboard',
-      name: 'dashboard',
-      component: () => import('./views/Dashboard.vue')
-    },
-    {
-      path: '/location',
-      name: 'location',
-      component: () => import('./views/Location.vue')
-    },
-    {
       path: '/booking',
       name: 'booking',
       component: () => import('./views/Booking.vue')

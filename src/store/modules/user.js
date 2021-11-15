@@ -7,7 +7,9 @@ export default {
   state: {
     message: '',
     UserDataProfile: [],
-    isLoadDataProfile: false
+    isLoadDataProfile: false,
+    info: {},
+    update: {}
   },
 
   mutations: {
@@ -17,6 +19,9 @@ export default {
     async fillUserDataProfile (state, data) {
       state.UserDataProfile = data
       state.isLoadDataProfile = true
+    },
+    setUpdateForm (state, payload) {
+      state.update = payload
     }
   },
 
@@ -153,7 +158,22 @@ export default {
     logout () {
       localStorage.removeItem('user')
       document.location.href = '/'
+    },
+    async doUpdateProfile (ctx) {
+      console.log(ctx.state.update)
+      let user = await AXIOS.post('/user/changeBaseUserData',
+        {
+          ...ctx.state.update
+        }, {
+          headers: auth()
+        }).then(result => {
+        console.log('result from server:\n', result)
+        if (result.status === 200) {
+          router.push('/profile')
+        }
+      }).catch(error => {
+        console.log(error)
+      })
     }
-
   }
 }
