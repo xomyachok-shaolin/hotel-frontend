@@ -55,9 +55,6 @@
                   <v-btn color="success" @click="doUpdateProfile">
                     Сохранить
                     <v-icon right dark>fa-edit</v-icon>
-                    <template slot="waiting">
-        <loading/>
-      </template>
                   </v-btn>
                 </v-card-actions>
               </v-card>

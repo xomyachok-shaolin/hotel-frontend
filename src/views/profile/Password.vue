@@ -21,7 +21,7 @@
                       label="Password"
                       type="password"
                       v-model="form.password"
-                      :error-messages="error.password || match"
+                      :error-messages="match"
                     ></v-text-field>
                     <v-text-field
                       prepend-icon="fa-lock"
@@ -86,16 +86,15 @@ export default {
     ...mapWaitingActions('user', {
       doGetInfo: 'loading user'
     }),
-    ...mapMutations({
-      setUpdateForm: 'user/setUpdateForm'
-    }),
-    ...mapActions({
-      doUpdateProfile: 'user/doUpdateProfile'
-    })
+    ...mapActions(['doUpdateProfile']),
+    ...mapMutations(['setUpdateForm'])
   },
   watch: {
     form: {
       handler (v) {
+        let user = JSON.parse(localStorage.getItem('user'))
+        this.form.idUser = user.idUser
+        this.form.login = user.login
         this.setUpdateForm(v)
       },
       deep: true
