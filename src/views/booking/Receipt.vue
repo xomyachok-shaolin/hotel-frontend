@@ -46,7 +46,7 @@
 
                   <v-list-tile>
                     <v-list-tile-content>
-                      <v-list-tile-title>Всего</v-list-tile-title>
+                      <v-list-tile-title>Итого</v-list-tile-title>
                     </v-list-tile-content>
 
                     <v-list-tile-action>{{total}} руб</v-list-tile-action>

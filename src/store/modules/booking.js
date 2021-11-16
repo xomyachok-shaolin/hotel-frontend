@@ -62,10 +62,9 @@ export default {
       let user = JSON.parse(localStorage.getItem('user'))
       if (!user) ctx.dispatch('logout')
 
-      let booking = await AXIOS.get('/booking/' + id,
-        {
-          headers: auth()
-        })
+      let booking = await AXIOS.get('/booking/' + id, {
+        headers: auth()
+      })
         .catch(error => {
           console.log(error.response.data)
         })
@@ -80,10 +79,9 @@ export default {
         }
       })
       const { startDate, endDate } = date
-      let rooms = await AXIOS.get(`/booking/room/?start_date=${startDate}&&end_date=${endDate}`,
-        {
-          headers: auth()
-        })
+      let rooms = await AXIOS.get(`/booking/room/?start_date=${startDate}&&end_date=${endDate}`, {
+        headers: auth()
+      })
         .catch(error => {
           console.log(error.response.data)
         })
@@ -103,12 +101,12 @@ export default {
 
         let user = JSON.parse(localStorage.getItem('user'))
 
-        await AXIOS.post('/booking/',
-          {
-            ...ctx.state.createForm, user: user.idUser
-          }, {
-            headers: auth()
-          }).then(result => {
+        await AXIOS.post('/booking/', {
+          ...ctx.state.createForm,
+          user: user.idUser
+        }, {
+          headers: auth()
+        }).then(result => {
           console.log('result from server:\n', result)
           if (result.status === 200) {
             router.push(`/booking/payment/${result.data.id}`)
@@ -125,12 +123,11 @@ export default {
         return
       }
       if (confirm('Вы уверены, что хотите продолжите?')) {
-        await AXIOS.post('/payment/',
-          {
-            ...payment
-          }, {
-            headers: auth()
-          }).then(result => {
+        await AXIOS.post('/payment/', {
+          ...payment
+        }, {
+          headers: auth()
+        }).then(result => {
           console.log('result from server:\n', result)
           if (result.status === 200) {
             router.push('/payment/completed')
@@ -146,17 +143,33 @@ export default {
         return
       }
 
-      // if (confirm('Вы уверены, что хотите продолжите?')) {
-      //   let pay = await authInstance.post(`/payment/`, { ...payment }).then(r => r.data)
-
-      //   if (!pay.error) {
-      //     dispatch('doCheckout', payment.booking_id)
-      //     router.push('/booking/checkout/completed')
-      //   }
-      // }
+      if (confirm('Вы уверены, что хотите продолжите?')) {
+        await AXIOS.post('/payment/', {
+          ...payment
+        }, {
+          headers: auth()
+        }).then(result => {
+          console.log('result from server:\n', result)
+          if (result.status === 200) {
+            dispatch('doCheckout', payment.booking_id)
+            router.push('/booking/checkout/completed')
+          }
+        }).catch(error => {
+          console.log(error)
+        })
+      }
     },
-    async doCheckout ({ commit, state }, id) {
-      // await authInstance.patch(`/booking/${id}/`, { status_id: 2, check_out: new Date().toISOString() }).then(r => r.data)
+    async doCheckout (id) {
+      await AXIOS.post('/booking/' + id, {
+        status_id: 2,
+        check_out: new Date().toISOString()
+      }, {
+        headers: auth()
+      }).then(result => {
+        console.log('result from server:\n', result)
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
 }

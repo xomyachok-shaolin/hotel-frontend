@@ -51,7 +51,7 @@
                       color="error"
                       :to="`/booking/checkout/${booking.id}`"
                       v-if="booking.status === 'Зарегистрировано'"
-                    >Выселить</v-btn>
+                    >Выселение</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-flex>

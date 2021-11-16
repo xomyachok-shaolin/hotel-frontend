@@ -8,21 +8,21 @@
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
               <v-toolbar dark color="primary">
-                <v-toolbar-title>Payment completed. Thank you!</v-toolbar-title>
+                <v-toolbar-title>Оплата завершена. Спасибо!</v-toolbar-title>
               </v-toolbar>
               <v-container>
                 <h2
                   style="color:red; font-size: 2em; text-align:center;"
-                >Please check-in before 2 PM.</h2>Note:
+                >Пожалуйста, регистрируйтесь до 14:00.</h2>Примечание:
                 <ol>
-                  <li>Identification documents are required in the check-in process; otherwise this booking will be void.</li>
-                  <li>If you've selected Cash method please pay at Check-in counter</li>
+                  <li>Документы, удостоверяющие личность, необходимы в процессе регистрации; в противном случае это бронирование будет аннулировано.</li>
+                  <li>Если вы выбрали метод наличными, оплатите на стойке регистрации.</li>
                 </ol>
               </v-container>
               <v-card-actions>
                 <v-layout justify-center>
                   <v-btn color="success" to="/booking">
-                    <v-icon left dark>fa-long-arrow-alt-left</v-icon>Back
+                    <v-icon left dark>fa-long-arrow-alt-left</v-icon>Назад
                   </v-btn>
                 </v-layout>
               </v-card-actions>

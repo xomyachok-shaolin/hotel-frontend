@@ -58,7 +58,7 @@
                         <v-list-tile-title>Итого</v-list-tile-title>
                       </v-list-tile-content>
 
-                      <v-list-tile-action>{{total}} руб</v-list-tile-action>
+                      <v-list-tile-action> {{ total }} руб</v-list-tile-action>
                     </v-list-tile>
                   </v-list>
                   <v-card-actions>
@@ -115,7 +115,8 @@ export default {
     }
   },
   computed: {
-    total () {
+    total: function () {
+      console.log(this.cart)
       return this.cart.reduce((a, b) => a + b.price, 0)
     },
 

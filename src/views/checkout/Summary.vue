@@ -8,25 +8,25 @@
       <v-content>
         <v-container fluid>
           <v-layout row>
-            <h1>Check-out Summary</h1>
+            <h1>Сводная информация о выезде</h1>
           </v-layout>
           <v-layout row wrap v-if="permission">
             <v-flex xs12 sm12 md6 pa-2>
               <v-container fluid>
                 <v-card color="blue" dark v-if="total > 0">
                   <v-card-title primary-title>
-                    <div class="headline">Payment Detail</div>
+                    <div class="headline">Детали платежа</div>
                   </v-card-title>
 
                   <v-container fluid style="background-color: white;">
                     <v-layout row wrap>
                       <v-flex xs12 md12>
                         <v-select
-                          :items="[{id: '01', title:'Cash'}, {id:'02', title:'Credit Card'}]"
                           item-value="id"
+                          :items="[{id: '01', title:'Наличные'}, {id:'02', title:'Кредитная карта'}]"
                           item-text="title"
-                          label="Payment Method"
-                          title="Payment Method"
+                          label="Способ оплаты"
+                          title="Способ оплаты"
                           v-model="form.type"
                           light
                         ></v-select>
@@ -34,8 +34,8 @@
                       <v-flex xs12 md12 v-if="form.type === '02'">
                         <v-text-field
                           mask="credit-card"
-                          label="Credit Card"
-                          title="Credit Card"
+                          label="Кредитная карта"
+                          title="Кредитная карта"
                           light
                         />
                       </v-flex>
@@ -43,7 +43,7 @@
                         <v-text-field label="CVV" title="CVV" light/>
                       </v-flex>
                       <v-flex xs6 md12 v-if="form.type === '02'">
-                        <v-text-field mask="date" label="MM/YY" title="VALID THRU" light/>
+                        <v-text-field mask="date" label="ММ/ГГ" title="VALID THRU" light/>
                       </v-flex>
                     </v-layout>
                   </v-container>
@@ -52,17 +52,17 @@
                     <v-btn
                       color="success"
                       @click="doPayment({booking_id:id, payment_type: form.type, amount: total})"
-                    >Pay</v-btn>
+                    >Оплатить</v-btn>
                   </v-layout>
                 </v-card>
 
                 <v-card color="blue" dark v-else>
                   <v-card-title primary-title>
-                    <div class="headline">No Payment Required</div>
+                    <div class="headline">Оплата не требуется</div>
                   </v-card-title>
 
                   <v-layout row justify-center>
-                    <v-btn color="success" @click="checkOut">Check out</v-btn>
+                    <v-btn color="success" @click="checkOut">Освободить номер</v-btn>
                   </v-layout>
                 </v-card>
               </v-container>
@@ -71,19 +71,19 @@
               <v-container fluid>
                 <v-card color="blue" dark>
                   <v-card-title primary-title>
-                    <div class="headline">Booking Summary (Additional Services)</div>
+                    <div class="headline">Резюме бронирования (дополнительные услуги)</div>
                   </v-card-title>
                   <v-list light>
                     <fragment v-for="d in booking.detail" :key="d.id">
-                      <fragment v-for="o in d.order_set" :key="o.id">
-                        <v-list-tile v-for="s in o.service" :key="s.id">
+                      <fragment v-for="o in d.orders" :key="o.id">
+                        <v-list-tile v-for="s in o.services" :key="s.id">
                           <v-list-tile-content>
                             <v-list-tile-title>{{s.title}}</v-list-tile-title>
                             <v-list-tile-sub-title>{{s.type}}</v-list-tile-sub-title>
                           </v-list-tile-content>
 
                           <v-list-tile-action>
-                            <v-list-tile-action>{{s.price}} THB</v-list-tile-action>
+                            <v-list-tile-action>{{s.price}} руб</v-list-tile-action>
                           </v-list-tile-action>
                         </v-list-tile>
                       </fragment>
@@ -93,15 +93,15 @@
 
                       <v-list-tile>
                         <v-list-tile-content>
-                          <v-list-tile-title>Total</v-list-tile-title>
+                          <v-list-tile-title>Итого</v-list-tile-title>
                         </v-list-tile-content>
 
-                        <v-list-tile-action>{{total}} THB</v-list-tile-action>
+                        <v-list-tile-action>{{total}} руб</v-list-tile-action>
                       </v-list-tile>
                     </fragment>
                     <v-list-tile v-else>
                       <v-list-tile-content>
-                        <v-list-tile-title>No Additional Services</v-list-tile-title>
+                        <v-list-tile-title>Нет дополнительных услуг</v-list-tile-title>
                       </v-list-tile-content>
                     </v-list-tile>
                   </v-list>
@@ -111,7 +111,7 @@
           </v-layout>
           <v-layout row wrap v-else>
             <v-flex>
-              <h1 class="red--text">Permission Denied</h1>
+              <h1 class="red--text">Доступ запрещен</h1>
             </v-flex>
           </v-layout>
         </v-container>
@@ -148,11 +148,12 @@ export default {
     }),
     total () {
       let service = this.booking.detail || []
-      service = service.reduce((a, b) => a + b.order_set.reduce((a, b) => a + b.total_price, 0), 0)
+      service = service.reduce((a, b) => a + b.orders.reduce((a, b) => a + b.total_price, 0), 0)
 
       return service
     },
     permission () {
+      console.log(Object.entries(this.booking).length === 0 && this.booking.constructor === Object)
       return !(Object.entries(this.booking).length === 0 && this.booking.constructor === Object)
     }
   },

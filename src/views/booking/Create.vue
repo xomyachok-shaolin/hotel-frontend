@@ -12,16 +12,16 @@
             color="error"
             icon="warning"
             outline
-          >You cannot book duplicated room</v-alert>
+          >Вы не можете забронировать дублированный номер</v-alert>
           <v-alert
             row
             :value="dateChecker"
             color="error"
             icon="fa-exclamation-triangle"
             outline
-          >Check-in date must come before check-out date.</v-alert>
+          >Дата заезда должна быть раньше даты выезда.</v-alert>
           <v-layout row>
-            <h1>Create Booking</h1>
+            <h1>Создать бронирование</h1>
           </v-layout>
 
           <!-- End Error -->
@@ -42,8 +42,8 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
-                    title="Check-in Date"
-                    label="Check-in Date"
+                    title="Дата заезда"
+                    label="Дата заезда"
                     prepend-icon="fa-calendar-alt"
                     readonly
                     v-on="on"
@@ -71,8 +71,8 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
-                    title="Check-out Date"
-                    label="Check-out Date"
+                    title="Дата выезда"
+                    label="Дата выезда"
                     prepend-icon="fa-calendar-alt"
                     readonly
                     v-on="on"
@@ -93,7 +93,7 @@
               <v-layout row>
                 <v-flex pa-1>
                   <h2>
-                    Room #{{index + 1}}
+                    Комната №{{index + 1}}
                     <v-btn icon ripple>
                       <v-icon color="red lighten-1" @click="deleteRoom(index)">fa-trash</v-icon>
                     </v-btn>
@@ -106,8 +106,8 @@
                     :items="availableRoom"
                     item-text="title"
                     item-value="id"
-                    label="Available Room"
-                    title="Available Room"
+                    label="Доступный номер"
+                    title="Доступный номер"
                     v-model="form.room[index]"
                   ></v-select>
                 </v-flex>
@@ -115,8 +115,8 @@
             </v-flex>
           </v-layout>
           <v-layout row justify-center>
-            <v-btn color="success" @click="addRoom">Add Room</v-btn>
-            <v-btn color="success" @click="doCreateBooking" :disabled="disabled">Book</v-btn>
+            <v-btn color="success" @click="addRoom">Добавить комнату</v-btn>
+            <v-btn color="success" @click="doCreateBooking" :disabled="disabled">Забронировать</v-btn>
           </v-layout>
         </v-container>
       </v-content>
