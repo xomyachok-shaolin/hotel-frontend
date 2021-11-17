@@ -7,11 +7,11 @@
       </template>
       <v-content>
         <v-container fluid>
-          <v-layout row>
+          <v-layout row px-5>
             <h1>Детали бронирования №{{booking.id}}</h1>
           </v-layout>
-          <v-layout row>
-            <h2>{{booking.start_date}} to {{booking.end_date}}</h2>
+          <v-layout row px-5>
+            <h2>{{booking.start_date}} по {{booking.end_date}}</h2>
           </v-layout>
           <v-container fluid grid-list-lg>
             <v-flex xs12 lg12>

@@ -7,7 +7,7 @@
       </template>
       <v-content>
         <v-container fluid>
-          <v-layout row>
+          <v-layout row px-4>
             <h1>Доступные услуги</h1>
           </v-layout>
           <v-layout row wrap>

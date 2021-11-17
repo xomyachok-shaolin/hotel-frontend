@@ -39,7 +39,7 @@
           </v-container>
           </v-container>
         <v-container fluid v-show="bookings.length > 0">
-          <v-layout row>
+          <v-layout row pa-4>
             <h1>Ваши отзывы</h1>
           </v-layout>
           <v-container fluid grid-list-lg fill-height v-show="bookings.length > 0">

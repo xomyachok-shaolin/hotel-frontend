@@ -53,9 +53,11 @@ export default {
 
       bookings = bookings.data
 
-      let personalBookings = bookings.data.filter(function (el) {
+      let personalBookings = bookings.filter(function (el) {
         return el.user.idUser === user.idUser
       })
+
+      console.log(personalBookings)
 
       if (user.roles[0] !== 'ADMIN') bookings = personalBookings
 

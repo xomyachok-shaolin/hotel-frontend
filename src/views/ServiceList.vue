@@ -7,7 +7,7 @@
       </template>
       <v-content>
         <v-container fluid>
-          <v-layout row>
+          <v-layout row pa-3>
             <h1>Доступные услуги</h1>
           </v-layout>
           <v-layout row wrap>
@@ -19,10 +19,10 @@
                       <v-card-title primary-title>
                         <div>
                           <div class="headline">{{service.type}} - {{service.title}}</div>
-                          <span>Цена : {{service.price}}</span>
+                          <span>Цена : {{service.price}} </span>
                         </div>
                       </v-card-title>
-                      <v-card-actions>Order Available in Booking Detail</v-card-actions>
+                      <v-card-actions>Заказ доступен в деталях бронирования</v-card-actions>
                     </v-card>
                   </v-flex>
                 </v-layout>

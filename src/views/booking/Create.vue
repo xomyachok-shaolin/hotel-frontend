@@ -20,12 +20,12 @@
             icon="fa-exclamation-triangle"
             outline
           >Дата заезда должна быть раньше даты выезда.</v-alert>
-          <v-layout row>
+          <v-layout row pa-4>
             <h1>Создать бронирование</h1>
           </v-layout>
 
           <!-- End Error -->
-          <v-layout row wrap>
+          <v-layout row wrap px-4>
             <v-flex xs12 sm12 md12 pa-2 v-if="error.error">
               <h2 v-for="e in error.error" :key="e" color="red">{{e}}</h2>
             </v-flex>
@@ -88,10 +88,10 @@
               </v-menu>
             </v-flex>
           </v-layout>
-          <v-layout row wrap>
+          <v-layout row wrap pa-4>
             <v-flex md6 v-for="(i,index) in form.room" :key="index">
               <v-layout row>
-                <v-flex pa-1>
+                <v-flex px-4>
                   <h2>
                     Комната №{{index + 1}}
                     <v-btn icon ripple>
@@ -101,7 +101,7 @@
                 </v-flex>
               </v-layout>
               <v-layout row>
-                <v-flex xs12 md12 pa-1>
+                <v-flex xs12 md12 px-4>
                   <v-select
                     :items="availableRoom"
                     item-text="title"

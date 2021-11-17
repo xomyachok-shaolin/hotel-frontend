@@ -7,7 +7,7 @@
       </template>
       <v-content>
         <v-container fluid>
-          <v-layout row>
+          <v-layout row pa-3>
             <h1>Оплата бронирования</h1>
           </v-layout>
           <v-layout row wrap>
