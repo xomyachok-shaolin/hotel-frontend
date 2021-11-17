@@ -30,8 +30,7 @@
                       </div>
                     </v-card-title>
                     <v-card-actions v-if="booking.status === 'Зарегистрировано'">
-                      <v-btn color="success" dark :to="`/booking/privilege/${room.id}`">Привилегии</v-btn>
-                      <v-btn color="success" dark :to="`/service/${room.id}`">Услуги</v-btn>
+                       <v-btn color="success" dark :to="`/service/${room.id}`">Услуги</v-btn>
                     </v-card-actions>
                     <v-card-actions v-else>
                       <p>Для использования наших услуг требуется регистрация.</p>

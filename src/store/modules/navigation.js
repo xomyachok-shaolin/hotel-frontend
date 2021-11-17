@@ -12,10 +12,10 @@ export default {
       clippedLeft: true
     },
     items: [
-      { title: 'Booking', icon: 'fa-book', link: '/booking' },
-      { title: 'Services', icon: 'fa-concierge-bell', link: '/service' },
-      { title: 'Review', icon: 'fa-pencil-alt', link: '/review' },
-      { title: 'Profile', icon: 'fa-user', link: '/profile' }
+      { title: 'Бронирование', icon: 'fa-book', link: '/booking' },
+      { title: 'Услуги', icon: 'fa-concierge-bell', link: '/service' },
+      { title: 'Отзывы', icon: 'fa-pencil-alt', link: '/review' },
+      { title: 'Профиль', icon: 'fa-user', link: '/profile' }
     ]
   },
   mutations: {

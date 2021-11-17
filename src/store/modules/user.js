@@ -34,6 +34,18 @@ export default {
         return true
       }
     },
+    isAdmin () {
+      let user = JSON.parse(localStorage.getItem('user'))
+      if (typeof user === 'undefined' || user === null) {
+        return false
+      } else {
+        if (user.roles[0] === 'ADMIN') {
+          return true
+        } else {
+          return false
+        }
+      }
+    },
     getUserDataProfile (state) {
       return state.UserDataProfile
     },

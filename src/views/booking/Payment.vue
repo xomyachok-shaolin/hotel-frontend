@@ -22,7 +22,7 @@
                     <v-layout row wrap>
                       <v-flex xs12 md12>
                         <v-select
-                          :items="[{id:'01', title:'Cash'}, {id:'02', title:'Credit Card'}]"
+                          :items="[{id:'01', title:'Наличные'}, {id:'02', title:'Кредитная карта'}]"
                           item-value="id"
                           item-text="title"
                           label="Способ оплаты"
@@ -49,10 +49,14 @@
                   </v-container>
 
                   <v-layout row justify-center>
-                    <v-btn
+                    <v-btn v-if="(form.type === '01' && isAdmin) || (form.type === '02')"
                       color="success"
                       @click="doPayment({booking_id:id, payment_type: form.type, amount: total})"
                     >Оплатить</v-btn>
+                    <v-btn v-if="form.type === '01' && !isAdmin"
+                      color="success"
+                      @click="doContinue()"
+                    >Продолжить</v-btn>
                   </v-layout>
                 </v-card>
               </v-container>
@@ -96,7 +100,8 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import router from '@/router'
+import { mapState, mapActions, mapGetters } from 'vuex'
 import { mapWaitingActions } from 'vue-wait'
 
 import NavBar from '@/components/NavBar.vue'
@@ -116,6 +121,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['isAdmin']),
     ...mapState({
       booking: state => state.booking.booking
     }),
@@ -130,7 +136,10 @@ export default {
     }),
     ...mapActions({
       doPayment: 'booking/doPayment'
-    })
+    }),
+    doContinue: function (params) {
+      router.push('/payment/completed')
+    }
   },
   beforeMount () {
     this.getBooking(this.id)

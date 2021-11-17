@@ -36,7 +36,7 @@
           <v-icon color="red">fa-sign-out-alt</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
-          <v-list-tile-title class="red--text">Logout</v-list-tile-title>
+          <v-list-tile-title class="red--text">Выйти</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
     </v-list>

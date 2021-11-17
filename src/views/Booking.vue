@@ -52,6 +52,11 @@
                       :to="`/booking/checkout/${booking.id}`"
                       v-if="booking.status === 'Зарегистрировано'"
                     >Выселение</v-btn>
+                    <v-btn
+                      color="success"
+                      :to="`/booking/payment/${booking.id}`"
+                      v-if="booking.status === 'Забронировано' "
+                    >Заселение</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-flex>

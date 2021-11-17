@@ -50,7 +50,16 @@ export default {
           console.log(error.response.data)
         })
       console.log(bookings.data)
-      ctx.commit('setBookings', bookings.data)
+
+      bookings = bookings.data
+
+      let personalBookings = bookings.data.filter(function (el) {
+        return el.user.idUser === user.idUser
+      })
+
+      if (user.roles[0] !== 'ADMIN') bookings = personalBookings
+
+      ctx.commit('setBookings', bookings)
     },
     async getBooking (ctx, id) {
       ctx.dispatch('checkAuthData', null, { root: true }).then((i) => {
@@ -70,6 +79,7 @@ export default {
         })
 
       console.log(booking.data)
+
       ctx.commit('setBooking', booking.data)
     },
     async getAvailableRoom (ctx, date) {
@@ -85,6 +95,8 @@ export default {
         .catch(error => {
           console.log(error.response.data)
         })
+
+      console.log(rooms)
 
       rooms = Array.from(rooms.data)
       rooms = rooms.map(r => ({ ...r, title: `(${r.type.title}) ${r.room_number} - ${r.price} руб` }))
@@ -118,10 +130,6 @@ export default {
     },
     async doPayment ({ dispatch }, payment) {
       console.log(payment)
-      if (payment.payment_type === '01') {
-        router.push('/payment/completed')
-        return
-      }
       if (confirm('Вы уверены, что хотите продолжите?')) {
         await AXIOS.post('/payment/', {
           ...payment
@@ -138,38 +146,20 @@ export default {
       }
     },
     async doPaymentCheckout ({ dispatch }, payment) {
-      if (payment.payment_type === '01') {
-        router.push('/payment/completed')
-        return
-      }
-
       if (confirm('Вы уверены, что хотите продолжите?')) {
-        await AXIOS.post('/payment/', {
+        await AXIOS.post('/payment/out', {
           ...payment
         }, {
           headers: auth()
         }).then(result => {
           console.log('result from server:\n', result)
           if (result.status === 200) {
-            dispatch('doCheckout', payment.booking_id)
             router.push('/booking/checkout/completed')
           }
         }).catch(error => {
           console.log(error)
         })
       }
-    },
-    async doCheckout (id) {
-      await AXIOS.post('/booking/' + id, {
-        status_id: 2,
-        check_out: new Date().toISOString()
-      }, {
-        headers: auth()
-      }).then(result => {
-        console.log('result from server:\n', result)
-      }).catch(error => {
-        console.log(error)
-      })
     }
   }
 }

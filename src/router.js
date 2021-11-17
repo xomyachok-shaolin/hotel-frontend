@@ -72,12 +72,6 @@ let router = new Router({
       component: () => import('./views/booking/Detail.vue')
     },
     {
-      path: '/booking/privilege/:id',
-      name: 'privilege',
-      props: true,
-      component: () => import('./views/Privilege.vue')
-    },
-    {
       path: '/service',
       name: 'service',
       props: true,

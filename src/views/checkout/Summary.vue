@@ -51,6 +51,7 @@
                   <v-layout row justify-center>
                     <v-btn
                       color="success"
+                      v-if="(form.type === '01' && isAdmin) || (form.type === '02')"
                       @click="doPayment({booking_id:id, payment_type: form.type, amount: total})"
                     >Оплатить</v-btn>
                   </v-layout>
@@ -121,7 +122,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 import { mapWaitingActions } from 'vue-wait'
 import router from '@/router'
 
@@ -143,6 +144,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['isAdmin']),
     ...mapState({
       booking: state => state.booking.booking
     }),
