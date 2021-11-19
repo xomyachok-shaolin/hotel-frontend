@@ -9,7 +9,8 @@ export default {
     UserDataProfile: [],
     isLoadDataProfile: false,
     info: {},
-    update: {}
+    update: {},
+    loaded: false
   },
 
   mutations: {
@@ -22,6 +23,9 @@ export default {
     },
     setUpdateForm (state, payload) {
       state.update = payload
+    },
+    changeLoaded (state) {
+      state.loaded = !state.loaded
     }
   },
 
@@ -51,13 +55,17 @@ export default {
     },
     isLoadDataProfile (state) {
       return state.isLoadDataProfile
+    },
+    getLoaded (state) {
+      return state.loaded
     }
   },
 
   actions: {
     async createUser (ctx, data) {
+      ctx.commit('changeLoaded')
+
       let isErrorExist = false
-      console.log(data)
       let response = await AXIOS.post('/registration/createUser',
         {
           first_name: data.first_name,
@@ -70,6 +78,7 @@ export default {
           password: data.password
         }
       ).then(result => {
+        ctx.commit('changeLoaded')
         if (result.status === 200) {
           let isErrorExist = true
           let message = result.data.message
@@ -90,6 +99,7 @@ export default {
             })
         }
       }).catch(error => {
+        ctx.commit('changeLoaded')
         console.log(error.response.data)
         let message = error.response.data.message
         setTimeout(() => (data.vm.$bvToast.toast(message, {
@@ -172,7 +182,7 @@ export default {
       document.location.href = '/'
     },
     async doUpdateProfile (ctx) {
-      console.log(ctx.state.update)
+      ctx.commit('changeLoaded')
       let user = await AXIOS.post('/user/changeBaseUserData',
         {
           ...ctx.state.update
@@ -186,6 +196,8 @@ export default {
       }).catch(error => {
         console.log(error)
       })
+      
+      ctx.commit('changeLoaded')
     }
   }
 }

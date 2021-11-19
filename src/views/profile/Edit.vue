@@ -9,7 +9,7 @@
         <v-container fluid fill-height>
           <v-layout align-center justify-center>
             <v-flex xs12 sm8 md8 lg6>
-              <v-card class="elevation-12">
+              <v-card v-if="!getLoaded" class="elevation-12">
                 <v-toolbar dark color="primary">
                   <v-toolbar-title>Редактирование профиля</v-toolbar-title>
                 </v-toolbar>
@@ -58,6 +58,7 @@
                   </v-btn>
                 </v-card-actions>
               </v-card>
+            <loading v-else/>
             </v-flex>
           </v-layout>
         </v-container>
@@ -67,7 +68,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 import { mapWaitingActions } from 'vue-wait'
 
 import NavBar from '@/components/NavBar.vue'
@@ -88,7 +89,8 @@ export default {
     ...mapState({
       info: state => state.user.info,
       error: state => state.user.error
-    })
+    }),
+    ...mapGetters(['getLoaded'])
   },
   methods: {
     ...mapActions(['doUpdateProfile']),
