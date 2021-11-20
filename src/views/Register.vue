@@ -7,41 +7,41 @@
             <v-card v-if="!getLoaded" class="elevation-12">
               <form ref="form" lazy-validation @submit.prevent="submitHandler" id="register-form">
                 <v-toolbar dark color="primary">
-                  <v-toolbar-title>Register</v-toolbar-title>
+                  <v-toolbar-title>Регистрация</v-toolbar-title>
                 </v-toolbar>
                 <v-card-text>
                   <v-text-field
                     v-model="login"
                     prepend-icon="fa-user"
                     name="login"
-                    label="Username"
+                    label="Имя пользователя"
                     type="text"
                   ></v-text-field>
                   <v-text-field
                     prepend-icon="fa-inbox"
                     name="email"
-                    label="Email Address"
+                    label="Электронная почта"
                     type="email"
                     v-model="email"
                   ></v-text-field>
                   <v-text-field
                     prepend-icon="fa-lock"
                     name="password"
-                    label="Password"
+                    label="Пароль"
                     type="password"
                     v-model="password"
                   />
                   <v-text-field
                     prepend-icon="fa-file-signature"
                     name="first_name"
-                    label="First name"
+                    label="Имя"
                     type="text"
                     v-model="first_name"
                   ></v-text-field>
                   <v-text-field
                     prepend-icon="fa-file-signature"
                     name="last_name"
-                    label="Last name"
+                    label="Фамилия"
                     type="text"
                     v-model="last_name"
                   ></v-text-field>
@@ -49,7 +49,7 @@
                     prepend-icon="fa-phone"
                     mask="phone"
                     name="phone"
-                    label="Phone number"
+                    label="Номер телефона"
                     type="text"
                     v-model="phone_number"
                   ></v-text-field>
@@ -57,7 +57,7 @@
                     prepend-icon="fa-address-card"
                     auto-grow
                     name="address"
-                    label="Address"
+                    label="Адрес"
                     v-model="address"
                     rows="2"
                   ></v-textarea>

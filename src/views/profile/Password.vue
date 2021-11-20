@@ -11,14 +11,14 @@
             <v-flex xs12 sm8 md8 lg6>
               <v-card class="elevation-12">
                 <v-toolbar dark color="primary">
-                  <v-toolbar-title>Edit Profile</v-toolbar-title>
+                  <v-toolbar-title>Изменение пароля</v-toolbar-title>
                 </v-toolbar>
                 <v-card-text>
                   <v-form>
                     <v-text-field
                       prepend-icon="fa-lock"
                       name="password"
-                      label="Password"
+                      label="Пароль"
                       type="password"
                       v-model="form.password"
                       :error-messages="match"
@@ -26,7 +26,7 @@
                     <v-text-field
                       prepend-icon="fa-lock"
                       name="cpassword"
-                      label="Confirm Password"
+                      label="Подтверждение пароля"
                       type="password"
                       v-model="form.cpassword"
                       :error-messages="match"
@@ -35,11 +35,11 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-btn color="error" to="/profile">
-                    <v-icon left dark>fa-times</v-icon>Cancel
+                    <v-icon left dark>fa-times</v-icon>Отмена
                   </v-btn>
                   <v-spacer></v-spacer>
                   <v-btn color="success" @click="doUpdateProfile" :disabled="disable">
-                    Save
+                    Сохранить
                     <v-icon right dark>fa-edit</v-icon>
                   </v-btn>
                 </v-card-actions>

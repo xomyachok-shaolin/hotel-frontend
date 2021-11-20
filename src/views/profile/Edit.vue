@@ -18,14 +18,14 @@
                     <v-text-field
                       prepend-icon="fa-file-signature"
                       name="firstname"
-                      label="Firstname"
+                      label="Имя"
                       type="text"
                       v-model="form.first_name"
                     ></v-text-field>
                     <v-text-field
                       prepend-icon="fa-file-signature"
                       name="lastname"
-                      label="Lastname"
+                      label="Фамилия"
                       type="text"
                       v-model="form.last_name"
                     ></v-text-field>
@@ -33,7 +33,7 @@
                       prepend-icon="fa-phone"
                       name="phone"
                       mask="phone"
-                      label="Phone Number"
+                      label="Номер телефона"
                       type="text"
                       v-model="form.phone_number"
                     ></v-text-field>
@@ -41,7 +41,7 @@
                       prepend-icon="fa-address-card"
                       auto-grow
                       name="address"
-                      label="Address"
+                      label="Адрес"
                       rows="2"
                       v-model="form.address"
                     ></v-textarea>
@@ -93,6 +93,7 @@ export default {
     ...mapGetters(['getLoaded'])
   },
   methods: {
+    ...mapGetters(['getUserDataProfile']),
     ...mapActions(['doUpdateProfile']),
     ...mapMutations(['setUpdateForm']),
     ...mapWaitingActions('user', {
@@ -108,7 +109,8 @@ export default {
     }
   },
   beforeMount () {
-    this.form = JSON.parse(localStorage.getItem('user'))
+    this.form = this.getUserDataProfile()
+    console.log(this.form)
 
     delete this.form.login
     delete this.form.email

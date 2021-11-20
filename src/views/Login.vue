@@ -6,7 +6,7 @@
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
               <v-toolbar dark color="primary">
-                <v-toolbar-title>Login</v-toolbar-title>
+                <v-toolbar-title>Авторизация</v-toolbar-title>
               </v-toolbar>
               <v-card-text>
                 <v-form @submit.prevent="submitHandler" id="check-login-form">
@@ -14,13 +14,13 @@
                     prepend-icon="fa-user"
                     name="login"
                     v-model="login"
-                    label="Username"
+                    label="Имя пользователя"
                     type="text"
                   />
                   <v-text-field
                     prepend-icon="fa-lock"
                     name="password"
-                    label="Password"
+                    label="Пароль"
                     id="password"
                     v-model="password"
                     type="password"
@@ -31,11 +31,11 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="primary" to="/register">
-                  Register
+                  Зарегистрироваться
                   <v-icon right dark>fa-user-plus</v-icon>
                 </v-btn>
                 <v-btn color="success" type="submit" form="check-login-form">
-                  Login
+                  Авторизоваться
                   <v-icon right dark>fa-sign-in-alt</v-icon>
                 </v-btn>
               </v-card-actions>
