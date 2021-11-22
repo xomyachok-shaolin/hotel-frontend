@@ -132,7 +132,7 @@ export default {
     },
     async doPayment ({ dispatch }, payment) {
       console.log(payment)
-      if (confirm('Вы уверены, что хотите продолжите?')) {
+      if (confirm('Вы уверены, что хотите продолжить?')) {
         await AXIOS.post('/payment/', {
           ...payment
         }, {

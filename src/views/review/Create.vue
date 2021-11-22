@@ -22,7 +22,7 @@
                     max="10"
                     min="0"
                     title="Оценка"
-                    label="Оценка"
+                    label="Поставьте оценку от 1 до 10"
                     v-model="form.score"
                     :error-messages="error.score"
                   ></v-text-field>
@@ -33,6 +33,7 @@
                     v-model="form.description"
                     :error-messages="error.description"
                   />
+                <div id="errorField" style="color: red"></div>
                 </v-card-text>
                 <v-card-actions>
                   <v-layout justify-center>

@@ -45,6 +45,7 @@
                       rows="2"
                       v-model="form.address"
                     ></v-textarea>
+                    <div id="errorField" style="color: red"></div>
                   </v-form>
                 </v-card-text>
                 <v-card-actions>

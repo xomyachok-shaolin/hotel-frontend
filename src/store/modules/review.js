@@ -23,8 +23,7 @@ export default {
           ctx.dispatch('logout')
         }
       })
-
-      await AXIOS.post('/review/', {
+      await AXIOS.post('/review/addReview', {
         ...ctx.state.review,
         booking_id: id
       }, {
@@ -36,7 +35,10 @@ export default {
           router.push('/review')
         }
       }).catch(error => {
-        console.log(error)
+        console.log(error.response.data.message)
+        let erMes = document.getElementById('errorField')
+        
+        erMes.innerText = error.response.data.message
       })
     },
     async doEditReview (ctx, id) {
@@ -59,7 +61,8 @@ export default {
           router.push('/review')
         }
       }).catch(error => {
-        console.log(error)
+        let erMes = document.getElementById('errorField')
+        erMes.innerText = error.response.data.message
       })
     }
   },
