@@ -8,7 +8,6 @@ import router from './router'
 import store from './store/index'
 
 import './plugins/vuetify'
-import 'vue-googlemaps/dist/vue-googlemaps.css'
 
 import { BootstrapVue } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'

@@ -181,7 +181,7 @@ export default {
       localStorage.removeItem('user')
       document.location.href = '/'
     },
-    async doUpdateProfile (ctx, data) {
+    async doUpdateProfile (ctx) {
       ctx.commit('changeLoaded')
       let user = await AXIOS.post('/user/changeBaseUserData',
         {
