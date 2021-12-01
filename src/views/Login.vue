@@ -35,7 +35,7 @@
                   <v-icon right dark>fa-user-plus</v-icon>
                 </v-btn>
                 <v-btn color="success" type="submit" form="check-login-form">
-                  Авторизоваться
+                  Войти
                   <v-icon right dark>fa-sign-in-alt</v-icon>
                 </v-btn>
               </v-card-actions>
