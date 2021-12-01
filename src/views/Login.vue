@@ -31,7 +31,7 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="primary" to="/register">
-                  Зарегистрироваться
+                  Регистрация
                   <v-icon right dark>fa-user-plus</v-icon>
                 </v-btn>
                 <v-btn color="success" type="submit" form="check-login-form">
