@@ -2,7 +2,7 @@ module.exports = {
   devServer: {
     proxy: {
       '^/api': {
-        target: 'http://localhost:8090',
+        target: 'https://stp-hotel.herokuapp.com/',
         changeOrigin: true
       }
     }
