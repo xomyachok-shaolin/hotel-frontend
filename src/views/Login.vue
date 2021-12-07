@@ -14,7 +14,7 @@
                     prepend-icon="fa-user"
                     name="login"
                     v-model="login"
-                    label="Имя пользователя"
+                    label="Логин"
                     type="text"
                   />
                   <v-text-field
