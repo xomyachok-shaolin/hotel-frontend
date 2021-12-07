@@ -8,7 +8,7 @@
       <v-content>
         <v-container fluid fill-height>
           <v-layout align-center justify-center>
-            <v-flex xs12 sm8 md8 lg16>
+            <v-flex xs12 sm18 md8 lg16>
               <v-card class="elevation-12">
                 <v-toolbar dark color="primary">
                   <v-toolbar-title>Ваш профиль</v-toolbar-title>
