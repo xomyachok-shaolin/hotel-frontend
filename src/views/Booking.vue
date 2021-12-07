@@ -45,7 +45,7 @@
                     </div>
                   </v-card-title>
                   <v-card-actions>
-                    <v-btn color="success" dark :to="`/booking/detail/${booking.id}`">Подробнее</v-btn>
+                    <v-btn color="success" dark :to="`/booking/detail/${booking.id}`">Детали</v-btn>
                     <v-btn color="#77C6FF" :to="`/booking/receipt/${booking.id}`">Чек</v-btn>
                     <v-btn
                       color="error"
