@@ -20,7 +20,7 @@
                       v-model="login"
                       prepend-icon="fa-user"
                       name="login"
-                      label="Имя пользователя"
+                      label="Логин"
                       type="text"
                       :class="{
                         invalid:
