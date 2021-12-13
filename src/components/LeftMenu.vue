@@ -59,12 +59,12 @@ export default {
     }),
     drawerOpen: {
       get () { return this.open },
-      set (v) {}
+      set (v) { this.drawer(v) }
     }
   },
   methods: {
     ...mapMutations({
-      drawerMini: 'navigation/drawerMini'
+      drawer: 'navigation/drawerOpen'
     }),
     ...mapActions({
       ...mapActions(['loadUserData']),
