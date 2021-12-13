@@ -109,7 +109,11 @@
                     label="Доступный номер"
                     title="Доступный номер"
                     v-model="form.room[index]"
-                  ></v-select>
+                  >
+                    <template slot="no-data">
+                      На указанный период нет доступных номеров
+                    </template>
+                  </v-select>
                 </v-flex>
               </v-layout>
             </v-flex>
